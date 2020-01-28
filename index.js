@@ -10,7 +10,6 @@ const projetos = [
 app.use(express.json());
 
 function checkIdExist(req, res, next) {
-    console.log('cheCk id');
     const { id } = req.params;
     if (projetos[id - 1]) next()
     return res.status(400).json({ error: `Nenhum projeto cadastrado com id: ${id}` })
@@ -42,16 +41,13 @@ app.put('/projects/:id', (req, res) => {
 
 app.delete('/projects/:id', (req, res) => {
     const { id } = req.params
-    console.log('id: ', id - 1)
     projetos.splice(id - 1, 1)
     return res.json(projetos)
 })
 
 app.post('/projects/:id/tasks', checkIdExist, (req, res) => {
-    console.log('Post --')
     const { id } = req.params
     const { title } = req.body;
-    console.log('Post -- ', title, id)
 
     projetos[id - 1].tasks.push(title);
 
